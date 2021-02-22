@@ -108,55 +108,6 @@
                 </div>
                 <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
             </div>
-            <!--<div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-file-image-o"></i> Gallery - Product
-                </div>
-                <div class="m-2">
-                    <div class="card">
-                        <div class="card-header">
-                            Product List
-                        </div>
-                        <div class="card-body">
-                            <div class="mt-1 pr-2 pl-1 mb-5">
-                                <div class="row mt-4 ml-2">
-                                    <% if(galleryImage.length > 0) { %>
-                                        <% galleryImage.forEach(function (image){ %>
-                                            <div class="col-3 mr-2 mb-2">
-                                                <a data-fancybox="gallery" href="/uploads/<%= prod._id%>/gallery/thumbs/<%= image%>">
-                                                    <img  src="/uploads/<%= prod._id%>/gallery/thumbs/<%= image%>" class="card-img-top"
-                                                          alt="<%= image%>" width="100px" height="150px">
-                                                </a>
-                                            </div>
-                                        <% })%>
-                                    <% } else { %>
-                                            <div class="ml-4">
-                                                <div class="alert alert-danger" role="alert">
-                                                    <h4 class="alert-heading">Warning!</h4>
-                                                    <p>Thank You, you have choose Product : <%= prod.title%>. But at this moment no Gellery is available for this Product.</p>
-                                                </div>
-                                            </div>
-                                    <% } %>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div>
-                        Current Gallery
-                        &lt;!&ndash;<img src="/uploads/{{prod._id}}/gallery/"  id="imagePreview"
-                        alt="Image will be shown here" width="100px" height="100px"/>&ndash;&gt;
-                    </div>
-                    <form id="dropzoneForm" action="/admin/product/upload-gallery/<%= prod._id %>" method="post"
-                          class="dropzone">
-                        <div class="fallback">
-                            <input name="file" type="file" multiple/>
-                            <button type="submit">Upload<button/>
-                        </div>
-                    </form>
-                </div>
-            </div>-->
         </div>
         <!--main-->
     </div>
