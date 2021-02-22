@@ -131,12 +131,12 @@ module.exports = {
         Category.find().then(cat=>{
             Product.findOne({'slug':slug}).then(editedProduct => {
                 console.log("Product : "+editedProduct);
-                const galleryDir = '/public/uploads/'+editedProduct._id+'/gallery/thumbs';
-                let galleryImage = null;
-                fss.readdir(galleryDir, function (err, files) {
-                    if(err){
-                        return console.log(err);
-                    } else {
+                // const galleryDir = '/public/uploads/'+editedProduct._id+'/gallery/thumbs';
+                // let galleryImage = null;
+                // fss.readdir(galleryDir, function (err, files) {
+                //     if(err){
+                //         return console.log(err);
+                //     } else {
                         galleryImage = files;
                         res.render('admin/product/edit',{
                             'title': 'Product-Edit',
@@ -144,9 +144,9 @@ module.exports = {
                             'prod': editedProduct,
                             error : error,
                             productCategoryEdit : editedProduct.category.replace(/\s+/g,'-').toLowerCase(),
-                            galleryImage: galleryImage,
+                            // galleryImage: galleryImage,
                         });
-                    }
+                    // }
                 })
             })
         })

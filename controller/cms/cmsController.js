@@ -45,20 +45,19 @@ module.exports = {
         Product.findOne({'slug': slug}).then(prods => {
             // console.log(prods);
             /*var galleryDir = "public/uploads/" + prods._id + "/gallery/thumbs";*/
-            var galleryDir = "uploads/" + prods._id + "/gallery/thumbs";
-            fss.readdir(galleryDir, function (err, file) {
-                if (err)
-                    throw err;
-                else {
-                    galleyImages = file;
+            // fss.readdir(galleryDir, function (err, file) {
+            //     if (err)
+            //         throw err;
+            //     else {
+            //         galleyImages = file;
                     res.render('cms/product_details', {
                         'title': 'CMS Cart',
                         'type_name': 'Product Details',
                         products: prods,
-                        galleyImages: galleyImages,
+                        // galleyImages: galleyImages,
                         category: cat
                     });
-                }
+                // }
             })
         })
     },
