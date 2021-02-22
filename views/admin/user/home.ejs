@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../layout/admin/header') %>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+<%- include('../../layout/admin/nav') %>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Product</li>
+        </ol>
+        <!--main-->
+        <div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Data - Product</div>
+                <div class="card-body">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>User Id</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Created Time</th>
+                                <th>Admin</th>
+                            <!--<th>Action</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% if (users.length) { %>
+                                <% users.forEach(function(user){ %>
+                                    <tr>
+                                        <td><%= user._id%></td>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.username%> </td>
+                                        <td><%= user.email%></td>
+                                        <td><%= user.created_time%></td>
+                                        <td>
+                                            <%if(user.admin ==1){%>
+                                                <span><i class="fa fa-user-secret" style="color: green" aria-hidden="true"></i>&nbsp;Yes</span>
+                                            <%} else if(user.admin ==0){%>
+                                                <span><i class="fa fa-user-times" style="color: red" aria-hidden="true"></i>&nbsp;No</span>
+                                            <%} else if(user.admin ==-1){%>
+                                                    <span><i class="fa fa-ban" style="color: red" aria-hidden="true"></i>&nbsp;Banned</span>
+                                            <%}%>%>
+                                        </td>
+                                        <!--<td>
+                                            <%if(user.admin ==1){%>
+                                                <span>You are not authorized to change an admin.</span>
+                                            <%} else if(user.admin ==0 || user.admin == -1){%>
+                                                <form action="/admin/change-user/<%= user._id%>" method="post">
+                                                    <select name="u_status">
+                                                        <option>Change Status</option>
+                                                        <option value="-1">Ban User</option>
+                                                        <option value="0">Active User</option>
+                                                    </select>
+                                                    <button class="btn btn-sm m-0" style="cursor:pointer;">Change</button>
+                                                </form>
+                                            <%}%>
+                                        </td>-->
+                                    </tr>
+                                <% }) %>
+
+                            <% } else { %>
+                                <div class="ml-4">
+                                    <div class="alert alert-danger" role="alert">
+                                        <h4 class="alert-heading">Warning!</h4>
+                                        <p>Thank You. But at this moment no User is available.</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+            </div>
+        </div>
+        <!--main-->
+    </div>
+    <!-- /.container-fluid-->
+
+    <%- include('../../layout/admin/footer') %>
+</div>
+</body>
+
+</html>

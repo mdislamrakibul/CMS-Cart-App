@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../layout/admin/header') %>
+<style>
+    #productUpdateBtn{
+        cursor: pointer;
+    }
+    #imagePreview{
+        margin: 20px;
+    }
+</style>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+<%- include('../../layout/admin/nav') %>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Product</li>
+        </ol>
+        <!--main-->
+        <div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Data - Product</div>
+                <div class="card-body">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <% if(error.length > 0 ) { %>
+                        <% error.forEach(function(error){ %>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong><%= error.message %></strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                        <form action="/admin/product/update/<%= prod._id %>" method="POST" enctype="multipart/form-data">
+                            <div class="form-row">
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label for="inputEmail4">Title</label>
+                                    <input class="form-control form-control-sm" name="editTitle" type="text"
+                                           onkeyup="titleKeyUpProduct(this.value)" placeholder="Enter Title"
+                                           value="<%= prod.title %>">
+                                    <input class="form-control form-control-sm" name="editId" type="hidden"
+                                           value="<%= prod._id %>">
+                                </div>
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Slug</label>
+                                    <input type="text" class="form-control form-control-sm" id="productSlug" name="editSlug"
+                                           placeholder="Your Slug Here" value="<%= prod.slug %>"  readonly>
+                                </div>
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Slug</label>
+                                    <input type="hidden" name="id"
+                                           value="<%= prod._id %>"  readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Description</label>
+                                    <textarea class="form-control form-control-sm" name="editDesc" rows="5"
+                                              placeholder="Product Description"><%= prod.description %>
+                                    </textarea>
+                                </div>
+
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Price</label>
+                                    <input type="number" class="form-control form-control-sm" name="editPrice"
+                                           value="<%= prod.price %>">
+
+                                    <label style="color: green">Current Category</label>
+                                    <input type="text" class="form-control form-control-sm" name="selectedCategory"
+                                           value="<%= prod.category %>" readonly>
+                                    <label>Select Category</label>
+                                    <select class="form-control form-control-sm" name="editCategory" id="productCategory" >
+                                        <option value="">-- Select Category --</option>
+                                        <% category.forEach(function (cats) { %>
+                                            <option value="<%= cats.slug %>"><%= cats.title %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Image</label>
+                                    <input type="file" class="form-control form-control-sm" name="editImage"
+                                           id="img" placeholder="Enter Product Image"
+                                           accept="image/jpeg, image/jpg, image/png, image/bmp" >
+                                </div>
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <img src="/uploads/<%= prod._id %>/<%= prod.image %>"  id="imagePreview" alt="Image will be shown here" width="100px" height="100px"/>
+                                </div>
+                            </div>
+                            <button type="submit" id="productUpdateBtn" class="btn btn-outline-primary btn-sm">Update</button>
+                        </form>
+                </div>
+                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-file-image-o"></i> Gallery - Product
+                </div>
+                <div class="m-2">
+                    <div class="card">
+                        <div class="card-header">
+                            Product List
+                        </div>
+                        <div class="card-body">
+                            <div class="mt-1 pr-2 pl-1 mb-5">
+                                <div class="row mt-4 ml-2">
+                                    <% if(galleryImage.length > 0) { %>
+                                        <% galleryImage.forEach(function (image){ %>
+                                            <div class="col-3 mr-2 mb-2">
+                                                <a data-fancybox="gallery" href="/uploads/<%= prod._id%>/gallery/thumbs/<%= image%>">
+                                                    <img  src="/uploads/<%= prod._id%>/gallery/thumbs/<%= image%>" class="card-img-top"
+                                                          alt="<%= image%>" width="100px" height="150px">
+                                                </a>
+                                            </div>
+                                        <% })%>
+                                    <% } else { %>
+                                            <div class="ml-4">
+                                                <div class="alert alert-danger" role="alert">
+                                                    <h4 class="alert-heading">Warning!</h4>
+                                                    <p>Thank You, you have choose Product : <%= prod.title%>. But at this moment no Gellery is available for this Product.</p>
+                                                </div>
+                                            </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        Current Gallery
+                        <!--<img src="/uploads/{{prod._id}}/gallery/"  id="imagePreview"
+                        alt="Image will be shown here" width="100px" height="100px"/>-->
+                    </div>
+                    <form id="dropzoneForm" action="/admin/product/upload-gallery/<%= prod._id %>" method="post"
+                          class="dropzone">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple/>
+                            <button type="submit">Upload<button/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--main-->
+    </div>
+    <!-- /.container-fluid-->
+
+    <%- include('../../layout/admin/footer') %>
+    <%- include('../../layout/admin/script') %>
+</div>
+</body>
+
+</html>

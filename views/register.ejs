@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <%- include('layout/cms/header')%>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/auth/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/auth/css/style.css">
+    <style>
+        /*ul{
+            list-style-type: none;
+        }*/
+    </style>
+</head>
+
+
+<body>
+
+<main role="main" class="container">
+    <section class="signup" style="margin-top: 8%;">
+        <div class="container">
+            <% if(error_message.length) {%>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong><%= error_message %></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% } %>
+            <% if(success_message.length) {%>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong><%= success_message %></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% } %>
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form method="POST" action="/register" class="register-form" id="register-form">
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Your Name" value="<%= name%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-accounts-add material-icons-name"></i></label>
+                            <input type="text" name="username" id="name" placeholder="Your Username" value="<%= username%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="email" name="email" id="email" placeholder="Your Email" value="<%= email%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="password" id="pass" placeholder="Password" value="<%= password%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <input type="password" name="repassword" id="re_pass" placeholder="Repeat your password" value="<%= re_password%>"/>
+                        </div>
+
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="signup-image">
+                    <% if(error == 0) { %>
+                        <figure id="figure"><img src="/auth/images/signup-image.jpg" alt="sing up image"></figure>
+                    <% } else { %>
+                        <div style="min-height: 72px; margin-top: 80px;">
+                            <ul>
+                                <% error.forEach(function (err) { %>
+                                    <li class="font-weight-bold" style="color: red">
+                                        <h6><%= err.message %></h6>
+                                    </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+
+                    <% } %>
+
+                    <a href="/login" class="signup-image-link">I Exists</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- /.container -->
+
+
+<%- include('layout/cms/footer')%>
+<script src="/auth/vendor/jquery/jquery.min.js"></script>
+<script src="/auth/js/main.js"></script>
+<script>
+    $(document).ready(function(){
+
+    })
+</script>
+</body>
+</html>

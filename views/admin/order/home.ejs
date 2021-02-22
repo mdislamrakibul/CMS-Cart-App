@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../layout/admin/header') %>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+<%- include('../../layout/admin/nav') %>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Order</li>
+        </ol>
+        <!--main-->
+        <div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Orders</div>
+                <div class="card-body">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Order Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Cell No</th>
+                                <th>List</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <% if(orders){%>
+                                    <% orders.forEach( function(order){ %>
+                                        <tr style="<% if(order.o_status== 1){%>
+                                            background: lightgreen;
+                                        <%} else if (order.o_status== -1) {%>
+                                            background: lightcoral;
+                                        <%} else {%>
+                                            background: lightgoldenrodyellow;
+                                        <%}%>">
+                                            <td><%= order._id %></td>
+                                            <td><%= order.o_name %></td>
+                                            <td><%= order.o_email %></td>
+                                            <td><%= order.o_address %></td>
+                                            <td><%= order.o_cellNo %></td>
+                                            <td><%= order.o_list %></td>
+                                            <td>$<%= order.o_total %> USD</td>
+                                            <td>
+                                                <% if(order.o_status== 1){%>
+                                                    <b><i class="fa fa-check-circle-o" aria-hidden="true"></i>Approved</b>
+                                                <%} else if (order.o_status== -1) {%>
+                                                    <b><i class="fa fa-ban"  aria-hidden="true"></i>Rejected</b>
+                                                <%} else {%>
+                                                    <b><i class="fa fa-question-circle" aria-hidden="true"></i>Pending</b>
+                                                <%}%>
+                                            </td>
+                                            <td>
+                                                <form action="/admin/status-action/<%= order._id%>" method="post">
+                                                    <select name="s_change">
+                                                        <option selected>Select Action</option>
+                                                        <option value="0">
+                                                            Pending
+                                                        </option>
+                                                        <option value="1">
+                                                            Approved
+                                                        </option>
+                                                        <option value="-1">
+                                                            Rejected
+                                                        </option>
+                                                    </select>
+                                                    <button style="cursor: pointer" class="btn btn-sm m-0">Change</button>
+                                                </form>
+                                            </td>
+                                            <td><%= order.created_time %></td>
+
+                                        </tr>
+
+                                    <%})%>
+                                <%} else { %>
+                                    <div class="ml-4">
+                                        <div class="alert alert-success" role="alert">
+                                            <h4 class="alert-heading">Warning!</h4>
+                                            <p>Thank You for being our part. You have no Previous order history.</p>
+                                            <hr>
+                                            <p class="mb-0">Browse our other products at <a href="/">CMS Cart</a>.</p>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+            </div>
+        </div>
+        <!--main-->
+    </div>
+    <!-- /.container-fluid-->
+
+    <%- include('../../layout/admin/footer') %>
+</div>
+</body>
+
+</html>

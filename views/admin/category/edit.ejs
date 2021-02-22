@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../layout/admin/header') %>
+<style>
+    #categorysubmitBtn{
+        cursor: pointer;
+    }
+</style>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+<%- include('../../layout/admin/nav') %>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Category</li>
+        </ol>
+        <!--main-->
+        <div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-pencil-square-o"></i> Edit - Category
+                </div>
+                <div class="card-body">
+                    <% if(success_message.length) { %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <% if(error_message.length) { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong><%= error_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <% if(error.length > 0 ) { %>
+                        <% error.forEach(function(error){ %>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong><%= error.message %></strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% }) %>
+                    <% } %>
+
+                    <form action="/admin/category/update/<%= category.slug %>" method="POST">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input class="form-control form-control-sm" name="editTitle" type="text"
+                                   onkeyup="titleKeyUp(this.value)" placeholder="Enter Title" value="<%= category.title %>">
+                            <input name="editId" type="hidden" value="<%= category._id %>">
+                        </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input class="form-control form-control-sm" id="slug" name="editSlug" type="text"
+                                   placeholder="Enter Slug"
+                                   readonly value="<%= category.slug %>">
+                        </div>
+
+                        <button type="submit" id="categorysubmitBtn" class="btn btn-outline-success btn-sm">Update</button>
+                    </form>
+                </div>
+                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+            </div>
+        </div>
+        <!--main-->
+    </div>
+    <!-- /.container-fluid-->
+
+    <%- include('../../layout/admin/footer') %>
+    <%- include('../../layout/admin/script') %>
+</div>
+</body>
+
+</html>

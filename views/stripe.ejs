@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <%- include('layout/cms/header')%>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/auth/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/auth/css/style.css">
+</head>
+
+<body>
+
+<main role="main" class="container">
+    <h3>Welcome to Payment Gateway</h3>
+    <form action="payment" method="POST">
+        <script
+                src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="<%= key %>"
+                data-amount="7000"
+                data-currency="usd"
+                data-name="Gautam Sharma"
+                data-description="Buy React.js Complete Course"
+                data-locale="auto" >
+        </script>
+    </form>
+</main><!-- /.container -->
+
+
+<%- include('layout/cms/footer')%>
+<script src="/auth/vendor/jquery/jquery.min.js"></script>
+<script src="/auth/js/main.js"></script>
+</body>
+</html>

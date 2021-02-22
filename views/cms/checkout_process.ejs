@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<%- include('../layout/cms/header')%>
+
+<body>
+<%- include('../layout/cms/navbar')%>
+<main role="main" class="container">
+
+    <style>
+        .card_ {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+        .list-group-item_ {
+            position: relative;
+            display: block;
+            padding: .3rem 1.25rem;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+        .min-height{
+            min-height: 50px;
+        }
+        .a-tag{
+            text-decoration: none;
+            color: black;
+        }
+        .a-tag:hover{
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+    <div class="row mt-3 mb-3">
+        <div class="col-2">
+            <div class="card_ mb-3" style="width: 11.5rem;">
+                <div class="card-header">
+                    Category
+                </div>
+                <ul class="list-group list-group-flush mt-1">
+                    <% category.forEach(function(cat){ %>
+                        <a href="/product-by-category/<%= cat.slug%>"><li class="list-group-item_"><%= cat.title%></li></a>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="card_">
+                <div class="card-header">
+                    <%= type_name %>
+                </div>
+                <div class="mt-1 pr-2 pl-1">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-8 pr-1">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Checkout Form
+                                        </div>
+                                        <% if(error.length > 0) {%>
+                                             <% error.forEach(function (err) { %>
+                                                  <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+                                                       <strong><%= err.message %></strong>
+                                                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                  </div>
+                                             <% }) %>
+                                        <%}%>
+                                        <div class="card-body">
+                                            <form action="/cash-on-delivery" method="post">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputEmail4"><b>Name</b></label>
+                                                        <input type="text" name="name" class="form-control" placeholder="Name" value="<% if(user) {%> <%= user.name %> <% } %>">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputPassword4"><b>Email</b></label>
+                                                        <input type="email" name="email" class="form-control" placeholder="email" value="<% if(user) {%> <%= user.email %> <% } %>">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputAddress"><b>Address</b></label>
+                                                    <textarea class="form-control" name="address" placeholder="Address"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputAddress2"><b>Cell No.</b></label>
+                                                    <input type="number" name="cell" class="form-control"  placeholder="Cell No.">
+                                                </div>
+
+                                                <button type="submit" class="btn btn-success btn-sm">Order for Purchase</button>
+                                            </form>
+                                        </div>
+                                        <hr>
+                                        <div style="padding: 5%">
+                                            <div class="row" >
+                                                <div class="col-4" style="background: palegreen;border-radius: 8%;">
+                                                    <b>Pay with stripe</b> &nbsp;<i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="col-8">
+                                                    <% if(cart){%>
+                                                        <% var subTotal = 0; %>
+                                                        <% cart.forEach(function(cart){ %>
+                                                            <% var total = parseFloat(cart.price)* parseFloat(cart.qty).toFixed(2); %>
+                                                            <% subTotal += +total %>
+                                                        <% }) %>
+                                                        <form action="stripe-payment" method="POST">
+                                                            <script
+                                                                    src="//checkout.stripe.com/v2/checkout.js"
+                                                                    class="stripe-button"
+                                                                    data-key="<%= key %>"
+                                                                    data-amount="<%= subTotal.toFixed(2) * 100%>"
+                                                                    data-currency="usd"
+                                                                    data-name="<%= user.name%>"
+                                                                    data-description="Online payment"
+                                                                    data-locale="auto" >
+                                                            </script>
+                                                        </form>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <style>
+                                    .table_ td, .table_ th {
+                                        padding: .2rem !important;
+                                        vertical-align: top;
+                                        border-top: 1px solid #dee2e6;
+                                    }
+                                    .card-body_{
+                                        -ms-flex: 1 1 auto;
+                                        flex: 1 1 auto;
+                                        min-height: 1px;
+                                        padding: .35rem !important;
+                                    }
+                                    .table_{
+                                        font-size: 12px;
+                                    }
+                                </style>
+                                <div class="col-4 pl-1">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Item Summery
+                                        </div>
+                                        <div class="card-body card-body_">
+                                            <% if(cart) { %>
+                                            <table class="table table_ table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Title</th>
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Subtotal</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <% var subTotal = 0; %>
+                                                <% cart.forEach(function(cart){ %>
+                                                    <% var total = parseFloat(cart.price)* parseFloat(cart.qty).toFixed(2); %>
+                                                    <% subTotal += +total %>
+                                                    <tr>
+                                                        <td><%= cart.title%></td>
+                                                        <td><%= cart.price%></td>
+                                                        <td><%= cart.qty%></td>
+                                                        <td><%= total.toFixed(2)%> </td>
+                                                    </tr>
+                                                <% }); %>
+                                                <tr>
+                                                    <td colspan="6" class="text-right">Total : $<%= parseFloat(subTotal).toFixed(2) %> USD.</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main><!-- /.container -->
+
+
+<%- include('../layout/cms/footer')%>
+</body>
+</html>

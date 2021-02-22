@@ -1,0 +1,32 @@
+<script>
+    /*--title slug for white space to -*/
+    function titleKeyUp(value){
+        var title =  value.replace(/\s/g, '-').toLowerCase();
+        document.getElementById('slug').value  = title;
+    }
+    function titleKeyUpEdit(value){
+        var editTitle =  value.replace(/\s/g, '-').toLowerCase();
+        document.getElementById('editSlug').value  = editTitle;
+    }
+
+    /*Product*/
+
+    /*--Image Preview*/
+    $("#img").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').attr('src', e.target.result).height(100).width(150);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    function titleKeyUpProduct(value){
+        console.log(value);
+        var productTitle =  value.replace(/\s/g, '-').toLowerCase();
+        document.getElementById('productSlug').value  = productTitle;
+    }
+
+    /*Product*/
+</script>

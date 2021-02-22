@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../layout/admin/header') %>
+<style>
+    #productSubmitBtn{
+        cursor: pointer;
+    }
+    #imagePreview{
+        margin: 20px;
+    }
+</style>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+<%- include('../../layout/admin/nav') %>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Product</li>
+        </ol>
+        <!--main-->
+        <div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Data - Product</div>
+                <div class="card-body">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                        <% if(error.length > 0 ) { %>
+                            <% error.forEach(function(error){ %>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong><%= error.message %></strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            <% }) %>
+                        <% } %>
+                        <form action="/admin/product/create" method="POST" enctype="multipart/form-data">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label for="inputEmail4">Title</label>
+                                    <input class="form-control form-control-sm" name="productTitle" type="text"
+                                           onkeyup="titleKeyUpProduct(this.value)" placeholder="Enter Title">
+                                </div>
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Slug</label>
+                                    <input type="text" class="form-control form-control-sm" id="productSlug" name="productSlug"
+                                           placeholder="Your Slug Here"  readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Description</label>
+                                    <textarea class="form-control form-control-sm" name="productDescription" rows="5"
+                                              placeholder="Product Description">
+                                    </textarea>
+                                </div>
+
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Price</label>
+                                    <input type="number" class="form-control form-control-sm" name="productPrice" placeholder="Enter Price">
+                                    <label>Select Category</label>
+                                    <select class="form-control form-control-sm" name="productCategory" id="productCategory">
+                                        <option value="">-- Select Category --</option>
+                                        <% category.forEach(function (cats) { %>
+                                            <option value="<%= cats.slug %>"><%= cats.title %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <label>Image</label>
+                                    <input type="file" class="form-control form-control-sm" name="productImage"
+                                           id="img" placeholder="Enter Product Image" accept="image/jpeg, image/jpg, image/png, image/bmp">
+                                </div>
+                                <div class="form-group col-md-6 font-weight-bold">
+                                    <img src="/uploads/noimage.png" id="imagePreview" alt="Image will be shown here" width="100px"
+                                         height="100px"/>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" id="productSubmitBtn" class="btn btn-outline-success btn-sm">Create</button>
+                        </form>
+                </div>
+                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+            </div>
+        </div>
+        <!--main-->
+    </div>
+    <!-- /.container-fluid-->
+
+    <%- include('../../layout/admin/footer') %>
+    <%- include('../../layout/admin/script') %>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<%- include('../layout/cms/header')%>
+
+<body>
+<%- include('../layout/cms/navbar')%>
+<main role="main" class="container">
+
+    <style>
+        .card_ {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+        .list-group-item_ {
+            position: relative;
+            display: block;
+            padding: .3rem 1.25rem;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+        .min-height{
+            min-height: 50px;
+        }
+        .a-tag{
+            text-decoration: none;
+            color: black;
+        }
+        .a-tag:hover{
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+    <div class="row mt-3 mb-3">
+        <div class="col-2">
+            <div class="card_ mb-3" style="width: 11.5rem;">
+                <div class="card-header">
+                    Category
+                </div>
+                <ul class="list-group list-group-flush mt-1">
+                   <% category.forEach(function(cat){ %>
+                        <a href="/product-by-category/<%= cat.slug%>"><li class="list-group-item_"><%= cat.title%></li></a>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="card_">
+                <div class="card-header">
+                    <%= type_name %>   <% if (cat_name != '') { %> : <%= cat_name %> <% } %>
+                </div>
+                <div class="mt-1 pr-2 pl-1">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div class="row">
+                        <% if (products.length) { %>
+                            <% products.forEach(function(prods){ %>
+                                <div class="col-4">
+                                    <div class="card_ mb-2" style="width: 18rem;">
+                                        <a href="/product-detail/<%= prods.slug%>">
+                                            <img src="/uploads/<%= prods._id%>/<%= prods.image%>" class="card-img-top" alt="<%= prods.title%>" width="287px" height="190px">
+                                        </a>
+                                        <div class="card-body">
+                                            <a href="/product-detail/<%= prods.slug%>" class="a-tag">
+                                                <h5 class="card-title" style="font-size: 1.1rem"><%= prods.title%></h5>
+                                            </a>
+                                            <p class="card-text min-height" > <%= prods.description%></p>
+                                            <div class="" style="width: 100%; display: flex">
+                                                <div style="width: 55%">
+                                                    <a href="/add-to-cart/<%= prods.slug%>" class="btn btn-outline-success btn-sm" title="Add to Cart"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+                                                </div>
+                                                <div style="width: 45%">
+                                                    <p class="card-text text-right"> $. <%= parseFloat(prods.price).toFixed(2) %> USD.</p>
+                                                </div>
+
+                                                <!---->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                                <div class="ml-4">
+                                    <div class="alert alert-danger" role="alert">
+                                        <h4 class="alert-heading">Warning!</h4>
+                                        <p>Thank You, you have choose category : <%= cat_name %>. But at this moment no product is available for this category.</p>
+                                        <hr>
+                                        <p class="mb-0">Browse our other products at <a href="/">CMS Cart</a>.</p>
+                                    </div>
+                                </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main><!-- /.container -->
+
+
+<%- include('../layout/cms/footer')%>
+</body>
+</html>

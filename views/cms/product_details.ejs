@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<%- include('../layout/cms/header')%>
+
+<body>
+<%- include('../layout/cms/navbar')%>
+<main role="main" class="container">
+
+    <style>
+        .card_ {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+        .list-group-item_ {
+            position: relative;
+            display: block;
+            padding: .3rem 1.25rem;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+        .add-cart{
+            text-decoration: none;
+            color: black;
+        }
+        .add-cart:hover{
+            text-decoration: none;
+            color: red;
+        }
+    </style>
+    <div class="row mt-3 mb-3">
+        <div class="col-2">
+            <div class="card_ mb-3" style="width: 11.5rem;">
+                <div class="card-header">
+                    Category
+                </div>
+                <ul class="list-group list-group-flush mt-1">
+                    <% category.forEach(function(cat){ %>
+                        <a href="/product-by-category/<%= cat.slug%>"><li class="list-group-item_"><%= cat.title%></li></a>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="card_">
+
+                <div class="card-header">
+                    <%= type_name %>   <% if (products) { %> : <%= products.title %> <% } %>
+                </div>
+                <div class="mt-1 pr-2 pl-1">
+                    <% if(success_message.length) {%>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong><%= success_message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div class="row mt-4 ml-5">
+                        <div class="col-4">
+                            <div class="mb-2" style="width: 18rem;">
+                                <img src="/uploads/<%= products._id %>/<%= products.image %>" class="card-img-top"
+                                     alt="<%= products.title %>" width="287px" height="190px">
+                            </div>
+                        </div>
+                        <div class="col-4 ml-5">
+                            <h6 class="" style="font-size: 1.1rem"><%= products.title %></h6>
+                            <p class=""> $. <%= parseFloat(products.price).toFixed(2) %> USD.</p>
+                            <a href="/add-to-cart/<%= products.slug %>" class="btn btn-primary btn-sm">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;
+                                Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2">
+                    <div class="card_">
+                        <div class="card-header">
+                            Product Gallery
+                        </div>
+                        <div class="mt-1 pr-2 pl-1 mb-5">
+                            <div class="row mt-4 ml-5">
+                                <% if (galleyImages.length){  %>
+                                    <% galleyImages.forEach(function(image){ %>
+                                        <div class="col-3 mr-2 mb-2">
+                                            <a data-fancybox="gallery" href="/uploads/<%= products._id %>/gallery/thumbs/<%= image%>">
+                                                <img  src="/uploads/<%= products._id %>/gallery/thumbs/<%= image%>" class="card-img-top"
+                                                      alt="{{this}}" width="150px" height="100px">
+                                            </a>
+                                        </div>
+
+                                    <% }) %>
+                                <% } else {  %>
+                                    <div class="ml-4">
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="alert-heading">Warning!</h4>
+                                            <p>Thank You, you have choose Product : <%= products.title %>. But at this moment no Gellery is available for this Product.</p>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main><!-- /.container -->
+
+
+<%- include('../layout/cms/footer')%>
+</body>
+</html>
