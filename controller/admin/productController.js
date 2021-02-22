@@ -147,7 +147,7 @@ module.exports = {
                             // galleryImage: galleryImage,
                         });
                     // }
-                })
+                // })
             })
         })
 
