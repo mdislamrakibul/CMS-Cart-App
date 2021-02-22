@@ -20,12 +20,13 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "resize-img": "^2.0.0",
-    "stripe": "^8.135.0"
-  },
-  "devDependencies": {
-    "connect-flash": "^0.1.1",
+    "stripe": "^8.135.0",
+	"connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
     "express-validator": "^6.9.2"
+  },
+  "devDependencies": {
+    
   }
 }
