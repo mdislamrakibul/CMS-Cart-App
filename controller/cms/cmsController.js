@@ -44,7 +44,7 @@ module.exports = {
         var galleyImages = null;
         Product.findOne({'slug': slug}).then(prods => {
             // console.log(prods);
-            var galleryDir = "public/uploads/" + prods._id + "/gallery/thumbs";
+            var galleryDir = "/public/uploads/" + prods._id + "/gallery/thumbs";
             fss.readdir(galleryDir, function (err, file) {
                 if (err)
                     throw err;

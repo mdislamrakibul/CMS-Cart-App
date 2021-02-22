@@ -131,7 +131,7 @@ module.exports = {
         Category.find().then(cat=>{
             Product.findOne({'slug':slug}).then(editedProduct => {
                 console.log("Product : "+editedProduct);
-                const galleryDir = 'public/uploads/'+editedProduct._id+'/gallery/thumbs';
+                const galleryDir = '/public/uploads/'+editedProduct._id+'/gallery/thumbs';
                 let galleryImage = null;
                 fss.readdir(galleryDir, function (err, files) {
                     if(err){
