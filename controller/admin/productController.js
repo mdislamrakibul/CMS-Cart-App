@@ -137,7 +137,7 @@ module.exports = {
                 //     if(err){
                 //         return console.log(err);
                 //     } else {
-                        galleryImage = files;
+                //         galleryImage = files;
                         res.render('admin/product/edit',{
                             'title': 'Product-Edit',
                             'category': cat,
